@@ -68,86 +68,30 @@ const slides = [
     ],
   },
   {
-    section: "Mapa de calor",
-    type: "heatmap",
-    kicker: "Severidad × Ocurrencia",
-    title: "Mapa de calor de riesgos éticos",
-    emphasis: "Posición de R1–R10 por severidad × ocurrencia (riesgo inherente, sin detección). ✓ = mitigación ya cubierta.",
-  },
-  {
-    section: "Beneficio-Riesgo",
-    type: "benefit-risk",
-    kicker: "Decisión de despliegue",
-    title: "Matriz beneficio-riesgo",
-    emphasis: "Muy Alto beneficio × Riesgo moderado → Limitar acceso.",
+    section: "Matrices de riesgo",
+    type: "matrices",
+    kicker: "Severidad × Ocurrencia · Beneficio-Riesgo",
+    title: "Mapa de calor y matriz beneficio-riesgo",
+    emphasis: "Dónde cae cada riesgo (R1–R10) y la decisión de despliegue resultante.",
   },
   {
     section: "Trazabilidad",
     type: "table",
-    kicker: "Cadena completa",
-    title: "Preocupación → principio → FMEA → mitigación",
-    emphasis: "Cobertura actual y mitigación prioritaria por preocupación, según el riesgo cuantificado.",
-    headers: ["Preocupación", "FMEA", "RPN", "Nivel", "Estado", "Mitigación prioritaria"],
+    kicker: "Cadena ética",
+    title: "Preocupación → Riesgo → Mitigación",
+    emphasis: "Cada preocupación ética, el riesgo que representa y su mitigación.",
+    headers: ["Preocupación", "Riesgo que representa", "Mitigación"],
     rows: [
-      ["Privacidad", "R9", "30", "H", "Cubierto", "Pseudonimización en outputs/logs y retención automatizada en operación; monitoreo de campos expuestos."],
-      ["No discriminación", "R2, R3", "36", "H", "Parcial", "Canal de corrección de CV; pruebas de sesgo; rúbricas inclusivas."],
-      ["Transparencia", "R8", "24", "M", "Parcial", "UI resalta red flags; confirmación explícita por rol."],
-      ["Supervisión humana", "R4", "45", "VH", "Cubierto", "Confirmación humana obligatoria en operación; registro reviewer/timestamp."],
-      ["Trazabilidad", "R10", "24", "M", "Cubierto", "Change requests; re-ejecución de baseline."],
-      ["Calidad", "R1, R7", "16", "M", "Cubierto", "Monitoreo de drift y rollback activos; pruebas adversariales."],
-      ["Bienestar laboral", "R6", "32", "VH", "Parcial", "PRIORITARIO: política de carga saludable; autorización >85 %."],
-      ["Limitación de propósito", "R5", "40", "H", "Parcial", "Política de no uso secundario; permisos que limiten export."],
-      ["Seguridad", "R2, R9", "36", "H", "Parcial", "Clasificación de datos; revisión IAM; cifrado verificado; incident response."],
+      ["Privacidad", "Exposición de PII de CVs y Clockify (R9).", "Pseudonimización en outputs/logs, S3 restringido y retención automatizada."],
+      ["No discriminación", "Sesgo por idioma o formato que excluya perfiles viables (R2, R3).", "Sin atributos sensibles; medición de sesgo; canal de corrección de CV."],
+      ["Transparencia", "Dependencia ciega del score; red flags poco visibles (R8).", "Output con must-haves, gaps y red flags; validación humana."],
+      ["Supervisión humana", "Automation bias: aceptar el top-1 sin revisar (R4).", "Sistema advisory; no avanza sin confirmación humana (G7)."],
+      ["Trazabilidad", "No poder reconstruir qué generó la recomendación; drift (R10).", "Snapshot, model IDs, checksums y logs; change requests."],
+      ["Calidad", "Errores de extracción, drift o timeouts (R1, R7).", "Validación humana (κ=0.87); CI/CD, drift checks y fallback."],
+      ["Bienestar laboral", "Sobreasignación de talento interno (R6).", "Bandera Clockify >85 %; política de carga (pendiente)."],
+      ["Limitación de propósito", "Reuso del fit_score para desempeño o disciplina (R5).", "Alcance excluye esos usos; política de no uso secundario."],
+      ["Seguridad", "Exposición de CVs/scores y accesos indebidos (R2, R9).", "S3 controlado y CI/CD; revisión IAM y cifrado (pendiente)."],
     ],
-  },
-  {
-    section: "Marco legal",
-    type: "table",
-    kicker: "Criterios de cumplimiento",
-    title: "Leyes aplicables",
-    emphasis: "Criterio académico; no sustituye una opinión jurídica.",
-    headers: ["Marco", "Relevancia para el proyecto", "Estado"],
-    rows: [
-      ["LFPDPPP", "Tratamiento de datos personales en CVs y Clockify.", "Implementado base"],
-      ["LFPED", "Evitar exclusiones injustas en oportunidades laborales.", "Implementado base"],
-      ["LFT", "Condiciones de trabajo y sobreasignación.", "Implementado base"],
-      ["GDPR / extranjero", "Candidatos o proveedores fuera de México.", "Implementado base"],
-    ],
-  },
-  {
-    section: "Requerimientos",
-    type: "table",
-    kicker: "Por impacto ético",
-    title: "Requerimientos y su estado actual",
-    emphasis: "Técnicos, operacionales y organizacionales por impacto.",
-    headers: ["Impacto", "Requerimiento clave", "Estado"],
-    rows: [
-      ["Privacidad", "Acceso S3, pseudonimización en outputs y logs, retención automatizada.", "Implementado"],
-      ["Equidad", "Métricas por idioma/seniority/dominio; pruebas de proxies.", "Implementado inicial; ampliar"],
-      ["Explicabilidad", "Mostrar must-haves, gaps, red flags y fit_score.", "Implementado; mejorar UI"],
-      ["Supervisión humana", "El sistema no avanza candidatos sin confirmación humana.", "Implementado"],
-      ["Sobreasignación", "Consulta Clockify y bandera >85 %.", "Implementado; definir acción"],
-      ["Confiabilidad", "CI/CD, drift checks, fallback y alertas.", "Implementado"],
-      ["Trazabilidad", "Snapshot, model IDs, checksums y logs.", "Implementado"],
-      ["Uso secundario", "Permisos que limiten export de scores.", "Definido en alcance; reforzar"],
-    ],
-  },
-  {
-    section: "Recomendaciones",
-    type: "bullets",
-    kicker: "Mitigación priorizada",
-    title: "Recomendaciones priorizadas",
-    emphasis: "Con los controles del piloto ya operando, lo pendiente es institucionalizarlos y escalarlos de dos áreas a toda la empresa.",
-    bullets: [
-      "[PRIORITARIO] Definir política de sobreasignación: cuándo bloquear, escalar o autorizar carga >85 % (RPN 32, VH).",
-      "Convertir el \"no uso secundario\" del fit_score en política formal, con permisos que limiten su exportación (RPN 40).",
-      "Habilitar canal de corrección de CV y monitoreo de equidad por idioma, seniority y dominio (RPN 36).",
-      "Formalizar aviso de privacidad para IA y procedimiento ARCO para candidatos externos.",
-      "Fortalecer la explicabilidad en la UI: resaltar gaps críticos y mensajes de baja confianza.",
-      "Repetir la validación humana (κ) y las pruebas de sesgo al abrir nuevos dominios o lotes.",
-      "Escalar por dominio —con gobierno de datos y estándares éticos comunes— hacia las ~22 000 vacantes y candidatos de toda la empresa.",
-    ],
-    notes: ["Ya implementado en el piloto (DevOps y Data&AI): supervisión humana obligatoria (no avanza sin revisión), privacidad (pseudonimización + retención automatizada), confiabilidad (CI/CD, drift, fallback, alertas) y trazabilidad técnica (snapshot, model IDs, checksums, logs)."],
   },
   {
     section: "Conclusión",
@@ -371,6 +315,7 @@ function DeckPresentation({ session, supabase }) {
     "architecture-map": ArchitectureMapSlide,
     heatmap: RiskHeatmapSlide,
     "benefit-risk": BenefitRiskSlide,
+    matrices: MatricesSlide,
     timeline: TimelineSlide,
     closing: ClosingSlide,
   }[slide.type] || HeroSlide);
@@ -1004,15 +949,15 @@ const HEATMAP_ROWS = [
 ];
 const OCC_HEADERS = ["Rara (1)", "Improbable (2)", "Posible (3)", "Probable (4)", "C. Segura (5)"];
 
-function HeatCell({ cell }) {
+function HeatCell({ cell, compact = false }) {
   return (
     <div
-      className="flex min-h-[3.2rem] flex-col items-center justify-center rounded-md px-1 text-center"
+      className={`flex ${compact ? "min-h-[2.3rem]" : "min-h-[3.2rem]"} flex-col items-center justify-center rounded-md px-1 text-center`}
       style={{ backgroundColor: RISK_COLORS[cell.l], color: RISK_TEXT[cell.l] }}
     >
-      <span className="text-sm font-black leading-none">{cell.l}</span>
+      <span className={`${compact ? "text-xs" : "text-sm"} font-black leading-none`}>{cell.l}</span>
       {cell.risks && (
-        <span className="mt-1 text-[10px] font-bold leading-tight opacity-95">
+        <span className={`mt-0.5 ${compact ? "text-[8px]" : "text-[10px]"} font-bold leading-tight opacity-95`}>
           {cell.risks.map((r) => (r.done ? `${r.c} ✓` : r.c)).join(", ")}
         </span>
       )}
@@ -1088,13 +1033,13 @@ const BR_ROWS = [
 ];
 const BR_RISK_HEADERS = ["Bajo", "Moderado", "Alto", "Muy Alto"];
 
-function BRCell({ cell }) {
+function BRCell({ cell, compact = false }) {
   return (
     <div
-      className="relative flex min-h-[3rem] items-center justify-center rounded-md px-1 text-center text-xs font-bold text-white"
+      className={`relative flex ${compact ? "min-h-[2.3rem]" : "min-h-[3rem]"} items-center justify-center rounded-md px-1 text-center ${compact ? "text-[10px]" : "text-xs"} font-bold text-white`}
       style={{ backgroundColor: BR_COLORS[cell.k] }}
     >
-      {cell.star && <Star size={12} className="mr-1 shrink-0" fill="currentColor" />}
+      {cell.star && <Star size={compact ? 10 : 12} className="mr-1 shrink-0" fill="currentColor" />}
       {BR_LABELS[cell.k]}
     </div>
   );
@@ -1144,6 +1089,65 @@ function BenefitRiskSlide({ slide }) {
           </div>
         </div>
       </div>
+    </section>
+  );
+}
+
+function MatricesSlide({ slide }) {
+  return (
+    <section>
+      <div className="mb-3">
+        <p className="mb-2 text-sm uppercase tracking-[0.28em] text-cyan-300/80">{slide.kicker}</p>
+        <h2 className="text-2xl font-black leading-[1.05] text-white md:text-3xl">{slide.title}</h2>
+        <p className="mt-2 text-sm text-white/60 md:text-base">{slide.emphasis}</p>
+      </div>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3 backdrop-blur-xl">
+          <p className="mb-2 text-xs font-black uppercase tracking-wider text-cyan-200/80">Mapa de calor · Severidad × Ocurrencia</p>
+          <div className="grid grid-cols-[4.5rem_repeat(5,1fr)] gap-1">
+            <div />
+            {OCC_HEADERS.map((h) => (
+              <div key={h} className="pb-0.5 text-center text-[8px] font-bold uppercase tracking-wide text-white/45">{h}</div>
+            ))}
+            {HEATMAP_ROWS.map((row) => (
+              <Fragment key={row.sev}>
+                <div className="flex items-center justify-end pr-1 text-right text-[8px] font-bold uppercase tracking-wide text-white/45">{row.sev}</div>
+                {row.cells.map((cell, ci) => (<HeatCell key={ci} cell={cell} compact />))}
+              </Fragment>
+            ))}
+          </div>
+          <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[9px] text-white/65">
+            {[["VH", "≥15"], ["H", "10–14"], ["M", "5–9"], ["L", "1–4"]].map(([k, r]) => (
+              <span key={k} className="flex items-center gap-1">
+                <span className="inline-flex h-3.5 w-5 items-center justify-center rounded text-[8px] font-black" style={{ backgroundColor: RISK_COLORS[k], color: RISK_TEXT[k] }}>{k}</span>{r}
+              </span>
+            ))}
+            <span className="text-white/50">✓ = mitigación cubierta</span>
+          </div>
+        </div>
+        <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3 backdrop-blur-xl">
+          <p className="mb-2 text-xs font-black uppercase tracking-wider text-cyan-200/80">Matriz beneficio-riesgo</p>
+          <div className="grid grid-cols-[5rem_repeat(4,1fr)] gap-1">
+            <div className="flex items-end pb-0.5 text-[8px] font-bold uppercase tracking-wide text-white/45">Benef. \ Riesgo</div>
+            {BR_RISK_HEADERS.map((h) => (
+              <div key={h} className="pb-0.5 text-center text-[8px] font-bold uppercase tracking-wide text-white/45">{h}</div>
+            ))}
+            {BR_ROWS.map((row) => (
+              <Fragment key={row.ben}>
+                <div className="flex items-center justify-end pr-1 text-right text-[9px] font-bold text-white/55">{row.ben}</div>
+                {row.cells.map((cell, ci) => (<BRCell key={ci} cell={cell} compact />))}
+              </Fragment>
+            ))}
+          </div>
+          <p className="mt-2 flex items-start gap-1.5 text-[11px] leading-snug text-white/75">
+            <Star size={12} fill="currentColor" className="mt-0.5 shrink-0 text-[#7DD3FC]" />
+            <span><span className="font-bold text-white">Posición:</span> Muy Alto beneficio × Riesgo moderado → <span className="font-bold text-white">Limitar acceso</span> (despliegue bajo supervisión controlada).</span>
+          </p>
+        </div>
+      </div>
+      <p className="mt-3 rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2 text-center text-[12px] leading-snug text-white/65">
+        Las <span className="font-bold text-cyan-200">9 preocupaciones</span> éticas se descomponen en <span className="font-bold text-cyan-200">10 modos de fallo</span> (R1–R10); algunas abarcan más de un riesgo (p. ej., Calidad = R1 + R7; Seguridad = R2 + R9).
+      </p>
     </section>
   );
 }
