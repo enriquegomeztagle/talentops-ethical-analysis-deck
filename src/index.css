@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+@import "tailwindcss";
+
+:root {
+  font: 18px/145% Inter, "Helvetica Neue", system-ui, sans-serif;
+  --deck-bg: #172235;
+  --deck-bg-soft: #0b1220;
+  --deck-text: #eaf2fb;
+  --deck-text-soft: #9fb3cc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--deck-bg);
+  color: var(--deck-text);
+  background-image: radial-gradient(circle at 12% 18%, rgba(14, 165, 233, 0.22), transparent 22%), radial-gradient(circle at 84% 0%, rgba(56, 189, 248, 0.18), transparent 22%);
+}
+
+#root {
+  width: 100%;
+  min-height: 100svh;
+}

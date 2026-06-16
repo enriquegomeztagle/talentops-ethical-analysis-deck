@@ -1,0 +1,24 @@
+{
+  "name": "talentops-ethical-analysis-deck",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.4",
+    "framer-motion": "^12.6.5",
+    "lucide-react": "^0.521.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.12",
+    "@vitejs/plugin-react": "^5.0.4",
+    "tailwindcss": "^4.0.12",
+    "vite": "^6.1.0"
+  }
+}

@@ -1,0 +1,13 @@
+services:
+  deck:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+        VITE_SUPABASE_PUBLISHABLE_KEY: ${VITE_SUPABASE_PUBLISHABLE_KEY}
+    image: talentops-ethical-analysis-deck:latest
+    container_name: talentops-ethical-analysis-deck
+    ports:
+      - "4173:80"
+    restart: unless-stopped
